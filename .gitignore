@@ -1,0 +1,5 @@
+# Emacs backup
+*~
+*.pyc
+transcoder-debug.php
+
