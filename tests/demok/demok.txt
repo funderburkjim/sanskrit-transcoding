@@ -1,0 +1,20 @@
+slp1: k
+deva क्
+unic: u'\u0915' u'\u094d'
+    : DEVANAGARI LETTER KA,DEVANAGARI SIGN VIRAMA
+
+slp1: ka
+deva क
+unic: u'\u0915'
+    : DEVANAGARI LETTER KA
+
+slp1: ki
+deva कि
+unic: u'\u0915' u'\u093f'
+    : DEVANAGARI LETTER KA,DEVANAGARI VOWEL SIGN I
+
+slp1: kz
+deva क्ष्
+unic: u'\u0915' u'\u094d' u'\u0937' u'\u094d'
+    : DEVANAGARI LETTER KA,DEVANAGARI SIGN VIRAMA,DEVANAGARI LETTER SSA,DEVANAGARI SIGN VIRAMA
+
