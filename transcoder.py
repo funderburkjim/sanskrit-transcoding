@@ -4,6 +4,9 @@
 """ Python version of transcoder. 
     Uses built-in library xml.etree.ElementTree,
     rather than lxml.
+    Revised 02-20-2017 Regarding special handling of slp1 to deva;
+     search for  regexCode  variable, and fsmentry['regex'] for where this comes into play.
+     This kind of coding is ugly, and needs to be revised for greater generality.
 """ 
 
 __program_name__ = 'transcoder.py'
@@ -49,7 +52,15 @@ def transcoder_fsm(sfrom,to) :
  fromto = sfrom + "_" + to
  if (fromto in transcoder_fsmarr) :
   return
- 
+ regexCode=None
+ regexpairs = [('slp1','deva'),('hkt','tamil')]
+ if sfrom.startswith('slp1') and to.startswith('deva'):
+  regexCode = 'slp1_deva'
+ elif sfrom.startswith('deva') and to.startswith('slp1'):
+  regexCode = 'deva_slp1'
+ elif sfrom.startswith('hkt') and to.startswith('tamil'):
+  regexCode = 'hkt_tamil'
+
  filein = transcoder_dir + '/' + fromto + ".xml"
  if (not os.path.exists(filein)) :
   #  print "file does not exist = " + filein
@@ -90,8 +101,10 @@ def transcoder_fsm(sfrom,to) :
    ##    Note that the last 3 elements '^', '/', and '\' are present only
    ##    because of accents. 
    ## except in these two cases, we process this entry no further
-   if ( (fromto != 'slp1_deva') and (fromto != 'hkt_tamil')and
-        (fromto != 'deva_slp1')) :
+   ## 02-22-2017. Allow some other names for from and to
+   #if ( (fromto != 'slp1_deva') and (fromto != 'hkt_tamil')and
+   #     (fromto != 'deva_slp1')) :
+   if not regexCode:
     continue
    inval = match.group(1)
    conlook=True
@@ -119,19 +132,15 @@ def transcoder_fsm(sfrom,to) :
   fsmentry['in'] = newinval
   # fsmentry['regex'] is defined only when conlook is true
   if conlook:
-   fsmentry['regex']=fromto  
+   fsmentry['regex']=regexCode
   fsmentry['out']=newoutval
   fsmentry['next']=nextState
   # Dec 5, 2013 save raw inval/outval
   fsmentry['inraw']=inval
   fsmentry['outraw']=outval
+  fsmentry['e-elt'] = ET.tostring(e)
   fsmentries.append(fsmentry)
   
-  #for k in fsmentry.keys():
-  # print k,"=>",fsmentry[k]
-  #  print (sval,inval,outval,nextval),etree.tostring(e)
-  
-  # print n,etree.tostring(e)
   n += 1
 
  fsm['fsm']=fsmentries
@@ -164,13 +173,16 @@ def transcoder_fsm(sfrom,to) :
  transcoder_fsmarr[fromto]=fsm
  #debug
  if (False):
-  filedbg = "deva-slp1-py.txt"
+  print "filein=",filein
+  filedbg = "dbg_%s.txt" %fromto
+  print "transcoder.py. Dbg info written to",filedbg
   fdbg = codecs.open(filedbg,"w","utf-8")
   fdbg.write("fsmentries=...\n")
   keys = ['starts','in','regex','out','next','inraw','outraw']
   for i in xrange(0,len(fsmentries)):
    fsmentry = fsmentries[i]
    s = []
+   
    #for key in fsmentry:
    for key in keys:
     if key not in fsmentry: # regex
@@ -183,6 +195,7 @@ def transcoder_fsm(sfrom,to) :
    out = "fsmentry[%s]=%s" %(i,sout)
    #print out.encode('utf-8')
    fdbg.write("%s\n" % out)
+   fdbg.write("  e-elt=%s\n" % fsmentry['e-elt'])
   #print "states=..."
   fdbg.write("states=...\n")
   for c in states:
@@ -329,7 +342,7 @@ def transcoder_processString_match(line,n,m,fsmentry) :
     return match
    return ""
   
-  if (fsmentry['regex'] == 'tamil') :
+  if (fsmentry['regex'] == 'hkt_tamil') :
    test = re.match('[^aAiIuUeEoO]',d)
    if (test):
     return match
