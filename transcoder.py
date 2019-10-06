@@ -8,6 +8,7 @@
      search for  regexCode  variable, and fsmentry['regex'] for where this comes into play.
      This kind of coding is ugly, and needs to be revised for greater generality.
 """ 
+from __future__ import print_function
 
 __program_name__ = 'transcoder.py'
 __author__ = 'Jim Funderburk'
@@ -15,7 +16,6 @@ __email__ = 'funderburk1@verizon.net'
 __copyright__ = 'Copyright 2011, Jim Funderburk'
 __license__ = 'GPL http://www.gnu.org/licenses/gpl.txt'
 __date__ = '2011-12'
-
 
 # Python Standard Library
 import os
@@ -46,6 +46,11 @@ transcoder_dir =os.path.dirname(os.path.abspath(__file__))
 transcoder_dir = os.path.dirname(transcoder_dir) ## parent
 transcoder_dir += "/data/transcoder"
 transcoder_fsmarr = {}  # a dictionary. keys are from+to
+global python_version
+python_version = sys.version[0]  # first character: 2 or 3
+if python_version == '3':
+ xrange = range
+ unichr = chr
 
 def transcoder_fsm(sfrom,to) :
  global transcoder_dir,transcoder_fsmarr
@@ -63,14 +68,14 @@ def transcoder_fsm(sfrom,to) :
 
  filein = transcoder_dir + '/' + fromto + ".xml"
  if (not os.path.exists(filein)) :
-  #  print "file does not exist = " + filein
+  #  print("file does not exist = " + filein)
   return
-  # print "file exists = " + filein
+  # print("file exists = " + filein)
  tree = ET.parse(filein)
  xml = tree.getroot()
  attributes = xml.attrib
  # for a in attributes:
- #  print a + "," + attributes[a]
+ #  print(a + "," + attributes[a])
  start = attributes['start']  ## required
  entries = list(xml)  ## children
  fsm = {} ## finite state machine to construct
@@ -152,7 +157,7 @@ def transcoder_fsm(sfrom,to) :
  ientry=0
  for fsmentry in fsmentries:
   inval = fsmentry['in']
-  #print "inval=",inval
+  #print("inval=",inval)
   # special logic for deva_slp1 for <in></in> <out>a</out>,
   # where inval is empty string
   if (len(inval)>0):
@@ -173,9 +178,9 @@ def transcoder_fsm(sfrom,to) :
  transcoder_fsmarr[fromto]=fsm
  #debug
  if (False):
-  print "filein=",filein
+  print("filein=",filein)
   filedbg = "dbg_%s.txt" %fromto
-  print "transcoder.py. Dbg info written to",filedbg
+  print("transcoder.py. Dbg info written to",filedbg)
   fdbg = codecs.open(filedbg,"w","utf-8")
   fdbg.write("fsmentries=...\n")
   keys = ['starts','in','regex','out','next','inraw','outraw']
@@ -193,10 +198,10 @@ def transcoder_fsm(sfrom,to) :
     s.append("%s => %s" %(key,val))
    sout = ' , '.join(s)
    out = "fsmentry[%s]=%s" %(i,sout)
-   #print out.encode('utf-8')
+   #print(out.encode('utf-8'))
    fdbg.write("%s\n" % out)
    fdbg.write("  e-elt=%s\n" % fsmentry['e-elt'])
-  #print "states=..."
+  #print("states=...")
   fdbg.write("states=...\n")
   for c in states:
    state = states[c]
@@ -205,13 +210,14 @@ def transcoder_fsm(sfrom,to) :
     y.append('%s' % i)
    x = ' '.join(y)
    out = "c=%s, state=%s" %(c,x)
-   #print out.encode('utf-8')
+   #print(out.encode('utf-8'))
    fdbg.write("%s\n" % out)
   fdbg.close()
 def to_unicode(x):
  # x is assumed to be a string with one of two forms
  # (a) \uxxxx\uyyyy  this is interpreted as unicode
  # (b) other -  this is returned without change
+ global python_version
  if (x == r"\u"):  # a case where notation is confusing
   return x
  match = re.match('\\\\u',x)
@@ -286,7 +292,7 @@ def transcoder_processString(line,from1,to) :
    nmatch=len(match)
    ##   echo "chk2: n=n, c='c', nmatch=nmatch<br>\n"
    #out = "chk2: n=%s, c='%s', nmatch=%s" %(n,c,nmatch)
-   #print out.encode('utf-8')
+   #print(out.encode('utf-8'))
    if (nmatch > nbest) :
     best = match
     nbest=nmatch
