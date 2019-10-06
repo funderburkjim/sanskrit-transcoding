@@ -1,10 +1,11 @@
 """convert.py
   Python example of transcoding
 """
+from __future__ import print_function
 import sys,codecs,re
 sys.path.append('../')
 import transcoder
-transcoder.transcoder_set_dir('../transcoder');
+transcoder.transcoder_set_dir('../transcoder')
 
 def convert(filein,fileout,tranin,tranout):
  fp = codecs.open(filein,"r",'utf-8')
@@ -28,7 +29,7 @@ def convert(filein,fileout,tranin,tranout):
   fpout.write("%s\n" % y)
  fp.close()
  fpout.close()
- print n,"lines converted\n"
+ print(n,"lines converted\n")
 #-----------------------------------------------------
 if __name__=="__main__":
  filein = sys.argv[1]
