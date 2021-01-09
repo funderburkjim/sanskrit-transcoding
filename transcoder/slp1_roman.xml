@@ -1,10 +1,5 @@
 <fsm start='SKT' inputDecoding='UTF-8' outputEncoding='UTF-8'>
-<!-- Problems: i^ 
-F^  \u1e5d\u0302 displays poorly.
-E^ a\u00ec wrong, replace with a\u00ee
-M/ M\ M^  
-H/ H\ H^
--->
+
 <e> <s>SKT</s> <in>E</in> <out>ai</out> </e>
 <e> <s>SKT</s> <in>O</in> <out>au</out> </e>
 <e> <s>SKT</s> <in>K</in> <out>kh</out> </e>

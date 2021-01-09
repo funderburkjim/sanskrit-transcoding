@@ -140,7 +140,9 @@
 <e> <s>INIT,SKT</s> <in>~</in> <out>\u0901</out> <next>INIT</next></e>
 <!-- OM -->
 <e> <s>INIT,SKT</s> <in>o~</in> <out>\u0950</out> <next>INIT</next> </e>
+<!-- M~ destroys invertability, so dropped.
 <e> <s>INIT,SKT</s> <in>M~</in> <out>\u0901</out> <next>INIT</next></e>
+-->
 <!-- 
 < Z =  jihvamuliya = h with line below
 < V =  upadhmaniya = h with breve below
