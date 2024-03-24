@@ -1,0 +1,77 @@
+<fsm start='INIT' inputDecoding='UTF-8' outputEncoding='UTF-8'>
+ <!-- 03-01-2023 cyrillic representation of slp1.
+  Initial reference: https://github.com/sanskrit-lexicon/COLOGNE/issues/404
+-->
+<e> <s>INIT</s> <in>а</in> <out>a</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>А</in> <out>A</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>и</in> <out>i</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>И</in> <out>I</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>у</in> <out>u</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>У</in> <out>U</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>ри</in> <out>f</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>Ри</in> <out>F</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>ли</in> <out>x</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>Ли</in> <out>X</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>э</in> <out>e</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>е</in> <out>e</out> <next>INIT</next></e> <!-- note -->
+<e> <s>INIT</s> <in>Э</in> <out>E</out> <next>INIT</next></e> <!-- note -->
+<e> <s>INIT</s> <in>ай</in> <out>E</out> <next>INIT</next></e> <!-- note -->
+<e> <s>INIT</s> <in>о</in> <out>o</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>ау</in> <out>O</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>О</in> <out>O</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>н</in> <out>M</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>х</in> <out>H</out> <next>INIT</next></e>
+
+<e> <s>INIT</s> <in>к</in> <out>k</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>кх</in> <out>K</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>г</in> <out>g</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>гх</in> <out>G</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>Н</in> <out>N</out> <next>INIT</next></e>  <!-- compare anusvara -->
+
+<e> <s>INIT</s> <in>ч</in> <out>c</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>чх</in> <out>C</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>дж</in> <out>j</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>джх</in> <out>J</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>нь</in> <out>Y</out> <next>INIT</next></e>
+
+<e> <s>INIT</s> <in>т</in> <out>w</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>тх</in> <out>W</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>д</in> <out>q</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>дх</in> <out>Q</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>н</in> <out>R</out> <next>INIT</next></e>   <!-- compare anusvara -->
+
+<e> <s>INIT</s> <in>т</in> <out>t</out> <next>INIT</next></e>  <!-- all same as palatal! -->
+<e> <s>INIT</s> <in>тх</in> <out>T</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>д</in> <out>d</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>дх</in> <out>D</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>н</in> <out>n</out> <next>INIT</next></e>
+
+<e> <s>INIT</s> <in>п</in> <out>p</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>пх</in> <out>P</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>б</in> <out>b</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>бх</in> <out>B</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>м</in> <out>m</out> <next>INIT</next></e>
+
+<e> <s>INIT</s> <in>й</in> <out>y</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>р</in> <out>r</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>л</in> <out>l</out> <next>INIT</next></e>
+<!--
+<e> <s>INIT</s> <in></in> <out>L</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in></in> <out>|</out> <next>INIT</next></e>
+-->
+<e> <s>INIT</s> <in>в</in> <out>v</out> <next>INIT</next></e>
+
+<e> <s>INIT</s> <in>ш</in> <out>S</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>ш</in> <out>z</out> <next>INIT</next></e>  <!-- note -->
+<e> <s>INIT</s> <in>с</in> <out>s</out> <next>INIT</next></e>
+<e> <s>INIT</s> <in>х</in> <out>h</out> <next>INIT</next></e>
+
+<!-- extra rules
+<e> <s>INIT</s> <in></in> <out></out> <next>INIT</next></e>
+ -->
+<e> <s>INIT</s> <in>джня</in> <out>jY</out> <next>INIT</next></e>
+<!-- ignore these cyrillic characters -->
+<e> <s>INIT</s> <in>ь</in> <out></out> <next>INIT</next></e>  
+
+
+</fsm>

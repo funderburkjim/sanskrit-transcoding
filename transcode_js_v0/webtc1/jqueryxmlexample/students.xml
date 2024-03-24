@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<students>
+  <student>
+		<name>John Lewis</name>
+		<age>15</age>
+		<phone>714-555-6677</phone>
+		<ssn>111-22-3456</ssn>
+  </student>
+  <student>
+		<name post="Class President">Gina Smith</name>
+		<age>16</age>
+		<phone>714-777-1234</phone>
+		<ssn>111-24-1784</ssn>
+  </student> 
+  <student>
+		<name>Crystal Morgan</name>
+		<age>15</age>
+		<phone>626-566-6134</phone>
+		<ssn>555-66-7841</ssn>
+  </student>   
+</students>

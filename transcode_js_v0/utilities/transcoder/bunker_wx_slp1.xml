@@ -1,0 +1,89 @@
+<fsm inputType='UTF-8' outputType='slp1' version='2' testBlanks='n'>
+<!-- //indology.info/email/members/wujastyk/#x1-120005.2 -->
+<!-- ejf. Oct 10, 2012 
+Ralph has modified his transcoder logic. This is his encoding of the
+conversion from wx to slp1.
+-->
+<edges>
+<e n='0'>  <in>a</in> <out>a</out> <cl>atom</cl> </e>
+<e n='1'>  <in>A</in> <out>A</out> <cl>atom</cl> </e>
+<e n='2'>  <in>i</in> <out>i</out> <cl>atom</cl> </e>
+<e n='3'>  <in>I</in> <out>I</out> <cl>atom</cl> </e>
+<e n='4'>  <in>u</in> <out>u</out> <cl>atom</cl> </e>
+<e n='5'>  <in>U</in> <out>U</out> <cl>atom</cl> </e>
+<e n='6a'> <in>q</in> <out>f</out> <cl>atom</cl></e>
+<e n='6b'> <in>Q</in> <out>F</out> <cl>atom</cl></e>
+<e n='7'> <in>L</in> <out>x</out> <cl>atom</cl></e>
+<e n='7a'> <in>LY</in> <out>X</out> <cl>atom</cl></e>
+<e n='8'>  <in>e</in> <out>e</out> <cl>atom</cl> </e>
+<e n='9'> <in>E</in> <out>E</out> <cl>atom</cl></e>
+<e n='10'>  <in>o</in> <out>o</out> <cl>atom</cl> </e>
+<e n='11'> <in>O</in> <out>O</out> <cl>atom</cl></e>
+<e n='12'> <in>M</in> <out>M</out> <cl>atom</cl> </e>
+<e n='12a'> <in>z</in> <out>~</out> <cl>atom</cl></e>
+<e n='13'> <in>H</in> <out>H</out> <cl>atom</cl> </e>
+<e n='14'> <in>k</in> <out>k</out> <cl>atom</cl></e>
+<e n='15'> <in>K</in> <out>K</out> <cl>atom</cl></e>
+<e n='16'> <in>g</in> <out>g</out> <cl>atom</cl></e>
+<e n='17'> <in>G</in> <out>G</out> <cl>atom</cl></e>
+<e n='18'> <in>f</in> <out>N</out> <cl>atom</cl></e>
+<e n='19'> <in>c</in> <out>c</out> <cl>atom</cl></e>
+<e n='20'> <in>C</in> <out>C</out> <cl>atom</cl></e>
+<e n='21'> <in>j</in> <out>j</out> <cl>atom</cl></e>
+<e n='22'> <in>J</in> <out>J</out> <cl>atom</cl></e>
+<e n='23'> <in>F</in> <out>Y</out> <cl>atom</cl></e>
+<e n='24'> <in>t</in> <out>w</out> <cl>atom</cl></e>
+<e n='25'> <in>T</in> <out>W</out> <cl>atom</cl></e>
+<e n='26'> <in>d</in> <out>q</out> <cl>atom</cl></e>
+<e n='27'> <in>D</in> <out>Q</out> <cl>atom</cl></e>
+<e n='28'> <in>N</in> <out>R</out> <cl>atom</cl></e>
+<e n='28a'> <in>lY</in> <out>L</out> <cl>atom</cl> </e>
+<e n='28b'> <in>lYh</in> <out>|</out> <cl>atom</cl> </e>
+<e n='29'> <in>w</in> <out>t</out> <cl>atom</cl></e>
+<e n='30'> <in>W</in> <out>T</out> <cl>atom</cl></e>
+<e n='31'> <in>x</in> <out>d</out> <cl>atom</cl></e>
+<e n='32'> <in>X</in> <out>D</out> <cl>atom</cl></e>
+<e n='33'> <in>n</in> <out>n</out> <cl>atom</cl></e>
+<e n='34'> <in>p</in> <out>p</out> <cl>atom</cl></e>
+<e n='35'> <in>P</in> <out>P</out> <cl>atom</cl></e>
+<e n='36'> <in>b</in> <out>b</out> <cl>atom</cl></e>
+<e n='37'> <in>B</in> <out>B</out> <cl>atom</cl></e>
+<e n='38'> <in>m</in> <out>m</out> <cl>atom</cl></e>
+<e n='39'> <in>y</in> <out>y</out> <cl>atom</cl> </e>
+<e n='40'> <in>r</in> <out>r</out> <cl>atom</cl> </e>
+<e n='41'> <in>l</in> <out>l</out> <cl>atom</cl> </e>
+<e n='42'> <in>v</in> <out>v</out> <cl>atom</cl> </e>
+<e n='43'> <in>S</in> <out>S</out> <cl>atom</cl></e>
+<e n='44'> <in>R</in> <out>z</out> <cl>atom</cl></e>
+<e n='45'> <in>s</in> <out>s</out> <cl>atom</cl></e>
+<e n='46'> <in>h</in> <out>h</out> <cl>atom</cl></e>
+
+<e n='52'> <in>\u0009</in> <out>\u0009</out> <cl>atom</cl> </e>
+<e n='53'> <in>\u000a</in> <out>\u000a</out> <cl>atom</cl> </e>
+<e n='54'> <in>\u000d</in> <out>\u000d</out> <cl>atom</cl> </e>
+<e n='55'> <in>\u0020</in> <out>\u0020</out> <cl>atom</cl> </e>
+
+<e n='60'> <in>0</in> <out>0</out> <cl>atom</cl> </e>
+<e n='61'> <in>1</in> <out>1</out> <cl>atom</cl> </e>
+<e n='62'> <in>2</in> <out>2</out> <cl>atom</cl> </e>
+<e n='63'> <in>3</in> <out>3</out> <cl>atom</cl> </e>
+<e n='64'> <in>4</in> <out>4</out> <cl>atom</cl> </e>
+<e n='65'> <in>5</in> <out>5</out> <cl>atom</cl> </e>
+<e n='66'> <in>6</in> <out>6</out> <cl>atom</cl> </e>
+<e n='67'> <in>7</in> <out>7</out> <cl>atom</cl> </e>
+<e n='68'> <in>8</in> <out>8</out> <cl>atom</cl> </e>
+<e n='69'> <in>9</in> <out>9</out> <cl>atom</cl> </e>
+
+<e n='70'> <in>Z</in> <out>'</out> <cl>atom</cl> </e>
+<e n='71'> <in>;</in> <out>;</out> <cl>atom</cl> </e>
+<e n='72'> <in>.</in> <out>.</out> <cl>atom</cl> </e>
+
+</edges>
+
+<buffers>
+	<buffer name='atoms' action='!!'>
+		<member id='atom'/>
+	</buffer>
+</buffers>
+
+</fsm>

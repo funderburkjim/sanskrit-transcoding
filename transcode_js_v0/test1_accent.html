@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <!--
+  (add-hook 'html-mode-hook
+        (lambda ()
+          (set (make-local-variable 'sgml-basic-offset) nil)))
+(setq js-indent-level 1)
+-->
+<head>
+<title>accent js </title>
+  <script type="text/javascript" src="transcoder3_accent.js"> </script>
+  <script type="text/javascript" src="transcoderJson2_accent.js"> </script>
+</head>
+<body>
+
+  <h1>test javascript transcoding, with accents</h1>
+  <textarea id="intext" name="intext" rows="4" cols="50" placeholder="Enter a pAda in slp1"></textarea>
+  <div>
+    <button onclick="analyze()">Analyze</button>
+  </div>
+  
+  <textarea id="output" name="output"
+    rows="10" cols="50" placeholder="output" >
+  </textarea>
+
+  
+<script>
+
+
+  
+ function analyze() {
+  let textslp = document.getElementById("intext").value;
+  let elt = document.getElementById("output");
+  let textdeva = transcoder.processString(textslp,'slp1','deva');
+  let textslp1 = transcoder.processString(textdeva,'deva','slp1');
+  elt.value = `${textslp}\n${textdeva}\n${textslp1}`;
+  return;
+ }
+
+</script>
+
+</body>
+</html>

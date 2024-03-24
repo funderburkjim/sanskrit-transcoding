@@ -1,0 +1,186 @@
+body {
+	color: black; background-color: #DBE4ED;
+	font-family: verdana,arial,helvetica,sansserif;
+	font-size: 12pt;
+}
+.greek {
+ font-family: Gentium, Palatino Linotype, Arial Unicode MS;
+ font-size: 12pt;
+}
+
+#dictid {
+  position:absolute;
+  top: 5px;
+  left: 5px;
+  width: 510px;
+  font-size: larger;
+}
+#dictnav {
+  position:absolute;
+  left: 5px;top:75px; width: 495px; 
+  /* left: 475px;top:5px; width: 505px;*/
+  /* background-color:#99CCDD; */ /* make same in a.nav */
+  background-color:#BBCCEE;
+}
+#dictcit {
+  position:absolute;
+  top: 120px;
+  left: 5px;
+ /* font-size: larger; */
+}
+#disp {
+  position:absolute;
+/*  left: 5px;right: 5px;height: 500px; */
+ top:155px; left: 200px;right: 5px;height: 500px;
+ background-color: white;
+ overflow: auto;
+}
+#displist {
+  position:absolute;
+/*  left: 5px;right: 5px;height: 500px; */
+ top:155px; left: 5px;width: 180px;height: 500px;
+ background-color: white;
+ overflow: auto;
+ line-height:115%;
+}
+#citinput { visibility:hidden;
+  position:absolute;
+  left: 5px;
+  top: 120px;
+}
+#inputsel { visibility:hidden;
+  position:absolute;
+  left: 300px;
+  top: 120px;
+}
+#outputsel { visibility:hidden;
+  position:absolute;
+  left: 300px;
+  top: 150px;
+}
+#searchbtndiv { visibility:hidden;
+  position:absolute;
+  left: 5px;
+  top: 150px;
+}
+#preferences {
+  position:absolute;
+/*  left: 550px; */
+  left: 5px;
+  top: 120px;
+}
+
+span.dictname {
+ position:relative;
+ bottom: 20px; 
+ font-size: 16px;
+}
+ul.nav
+{
+list-style-type:none;
+margin:0;
+padding:0;
+padding-top:6px;
+padding-bottom:6px;
+}
+li.nav
+{
+display:inline;
+margin:0;
+}
+
+a.nav:link,a.nav:visited
+{
+font-weight:bold;
+color:#FFFFFF;
+/* background-color:#99CCDD;*/
+background-color:#BBCCEE;
+text-align:center;
+padding:6px;
+text-decoration:none;
+text-transform:uppercase;
+}
+a.nav:hover,a.nav:active
+{
+background-color:#A9C1CB;
+}
+
+div.displist > a:link{
+text-decoration: none
+}
+/*
+div.displist > a:visited{
+color:#A9C1CB;
+text-decoration: none
+}
+*/
+div.displist > a:hover {
+background-color:#A9C1CB;
+cursor: pointer;
+text-decoration: none
+}
+/*
+div.displist > a:active {
+background-color:#A9C1CB;
+cursor: pointer;
+text-decoration: none
+}
+*/
+p {
+	padding-left: 15pt;
+	padding-right: 15pt;
+}
+
+table.display {
+  width: 100%;
+  margin-left:     5px;
+  margin-right:    5px;
+  margin-top: 20px;
+}
+td, th {
+  padding:         5px;
+  text-align:      left;
+}
+td.display {
+ font-weight: normal;
+}
+plex {
+	color: black;
+	background-color: #36648b;
+	font-family: verdana,arial,helvetica,sansserif;
+	font-size: 12pt;
+}
+
+h1 {
+	font-size: 24pt;
+}
+
+h2 {
+	font-size: 20pt;
+	padding-left: 15pt;
+	padding-top: 20pt;
+}
+
+h3 {
+	font-size: 18pt;
+	padding-left: 30pt;
+	padding-top: 20pt;
+}
+
+a:link {
+        color: black;
+	/* color: #00008b; */
+}
+
+a:visited {
+	color: #36648b;
+}
+
+a:active {
+	color: #4876ff;
+}
+
+a:hover {
+	background-color: #ffffcc;
+	color: #000033;
+}

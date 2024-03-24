@@ -1,0 +1,347 @@
+file: /data/apache/htdocs/Sanskrit/Funderburk/monier/webtc5wb/readme.org
+
+ejf Nov 1, 2012
+This note begins by describing the way the word lists in webtc5 are 
+generated. PMS requested this because he feels that the hierarchical
+list needs improvement. He provided two examples, centered at 'dA' and at
+'dAka'; the hierarchical algorithm is exemplified in detail for these examples.
+There are two list types, chooseable by the Preferences.
+The alphabetical list type logic is in monierlist.php, and uses mwkeys table.
+The hierarchical list type logic is in monierlisthier.php, and uses monier table.
+
+* The alphabetical list type.
+** brief description of the mwkeys table
+The mwkeys database table is constructed in mwupdate/keysxml.
+It provides an alphabetical ordering of the different MW headwords.
+
+Associated with each headword is a simple data structure that represents
+  all the L-numbers of the monier table that pertain to this headword.
+For instance:
+aMSaka  5       H2,39,39;H2,40,43
+There are two segments of L-numbers that pertain to the headword aMSaka;
+the first segment is L=39 only; the second segment is all L-numbers with
+40 <= L <=43.  One would need to examine the logic in keysxml to determine
+why these two segments are not coalesced.
+
+** the alphabetical list algorithm:
+The alphabetical list shows a segment of 25 words from the mwkeys table. It
+uses the citation word to locate the segment when the user requests a search
+by pressing 'enter'; it uses the first word or last word in an existing list
+to locate the segment when the user clicks on the up or down arrows. So, this
+is very simple.
+The alphabetical listing is not consistent with the hierarchy of the H-levels.
+For this reason, the H-level of each word is not shown in the alphabetical
+listing display, although, as the aMSaka example shows, that level is available.
+
+* The hierarchical list type.
+The hierarchical list shows a subset of 25 headwords drawn from a segment of
+25 or more consecutive records (ordered by L) drawn from the monier table. As
+with the alphabetical list, the location of this segment is determined by a
+particular headword.  
+** how the list of 25 headwords is chosen
+Let's take the case where the particular headword is from the citation field.
+In this case, the list of 25 is comprised of 12  headwords 
+preceding the particular headword, the particular headword itself, and 12 
+headwords following the particular headword.
+Let's consider the case of the 12 preceding headwords.
+First, a list of the preceding 5*12  (the 5 is fixed in the program) L-records
+are chosen, and ordered so that L1 is the first preceding, L2 the second
+preceding, etc.  So, we go thru L1,...,L60 looking for headwords.
+Also, we keep track of the last chosen headword, which initially is the
+particular headword.
+The factor of 5 was chosen with the expectation that after the filtering,
+which is about to be described, there would be at least the 12 headwords 
+needed for the display.
+Here is the filtering of records; it occurs in the list_prev and list_next
+functions of monierlisthier.php.
+
+If the H-element-name of a record doesn't match <H[1-4][BC]?>, 
+  we skip the record;
+If the key1-field of a record is the same as the previously chosen headword,
+  we skip the record.
+If the key1-field of a record is the same as the particular headword, 
+  we skip the record.
+Otherwise, we keep the record, and update the last chosen headword.
+
+By this process, we get a list of headwords.  From this list we choose the
+12 nearest to the particular headword (or fewer if there are not 12; e.g.,
+when the particular headword is 'a').
+
+An analogous process gets the next 12 headwords after the particular headword.
+
+** how the list of 25 words is displayed.
+We now have a list of 25 records from MW.  They are in L-order, and we know
+which is the particular headword (e.g., the 13th in the above example, the
+1st in the down-arrow-click case, and the 25th in the up-arrow-click case.)
+The particular headword is given a different color.
+Dots preceding each headword indicate the H-level:  No dots means H1,
+ 1 dot means H2, 2 dots means H3, 3 dots means H4.
+
+This complete the description of the algorithm.  Next will be presented
+an demonstration of the two examples mentioned by PMS.
+
+** The example of 'dA' 
+This is L-number 98221, which is line number 97794 in monier.xml as of the
+date of this note.
+There follows an annotated list of the 121 records centered here, with 
+labels 1 to 25 for the records appearing in the webtc5wb display list 
+(hierarchical display).
+001       H3,tvezanfmRa,89163
+002       H3,tvezapratIka,89164
+003       H3,tvezayAma,89165
+004       H3,tvezaraTa,89166
+005       H3,tvezasaMdfS,89167
+006       H2,tvezaTa,89168
+007       H2,tvezas,89169
+008       H3,tvezin,89170
+009       H2,tvezya,89171
+010       H1,tvezita,89172
+011       H1,tvE,89173
+012       H1A,tvE,89173.1
+013       H1,tvota,89174
+014       H1,tsar,89175
+015       H2,tsarA,89176
+016       H2,tsaru,89177
+017       H2A,tsaru,89178
+018       H2A,tsaru,89179
+019       H2A,tsaru,89180
+020       H3,tsarumat,89181
+021       H3,tsarumArga,89182
+022       H3,tsaruka,89183
+023       H2,tsAra,89184
+024       H3,tsArin,89185
+025       H3,tsAruka,89186
+026       H1,Ta,89187
+027       H3,TakAra,89188
+028       H2,Ta,89189
+029       H2A,Ta,89190
+030       H2A,Ta,89191
+031       H2A,Ta,89192
+032       H2A,Ta,89193
+033       H2B,Ta,89194
+034       H2B,Ta,89195
+035       H2B,Ta,89196
+036       H1,Takkana,89197
+037       H1,Takriya,89198
+038       H1,Takviyaka,89199
+039       H1,TaraTarAya,89200
+040       H1,Tarv,89201
+041       H1,Talyoraka,89202
+042       H1,Tuq,89203
+043       H1,TutkAra,89204
+044       H2,TutTukAraka,89205
+045       H2,TuTu,89206
+046       H3,TuTukft,89207
+047       H1,Turv,89208
+048    1  H1,TUt,89209
+049    2  H3,TUtkAra,89210
+050    3  H3,TUtkfta,89211
+051    4  H3,TUtkftya,89212
+052    5  H3,TUTU,89213
+053    6  H1,TETE,89214
+054    7  H1,Toqana,89215
+055    8  H1,TOReya,89216
+056    9  H1,TOReyaka,89216.1
+057   10  H1,da,89217
+058   11  H3,dakAra,89218
+059       H1,da,89219
+060   12  H1B,da,89220
+061   13  H1B,dA,89221
+062   14  H1,da,89222
+063       H1B,da,89223
+064       H1B,dA,89224
+065       H1,da,89225
+066       H1,da,89226
+067       H1A,da,89226.1
+068       H1,da,89227
+069       H1B,da,89228
+070       H1B,dA,89229
+071   15  H1,daMS,89230
+072       H1,daMS,89231
+073   16  H2,daMSa,89232
+074       H2B,daMSa,89233
+075       H2B,daMSa,89234
+076       H2B,daMSa,89235
+077       H2B,daMSa,89236
+078       H2B,daMSa,89237
+079       H2B,daMSa,89238
+080       H2B,daMSa,89239
+081       H2B,daMSa,89240
+082       H2B,daMSa,89241
+083   17  H2B,daMSI,89242
+084   18  H2B,daMSa,89243
+085   19  H3,daMSanASinI,89244
+086   20  H3,daMSaBIru,89245
+087   21  H3,daMSaBIruka,89246
+088   22  H3,daMSamaSaka,89247
+089       H3A,daMSamaSaka,89248
+090   23  H3,daMSamUla,89249
+091   24  H3,daMSavadana,89250
+092   25  H2,daMSaka,89251
+093       H2B,daMSaka,89252
+094       H2B,daMSaka,89253
+095       H2B,daMSaka,89254
+096       H2B,daMSaka,89255
+097       H2B,daMSikA,89256
+098       H3,daMSana,89257
+099       H3A,daMSana,89258
+100       H3A,daMSana,89259
+101       H3,daMSita,89260
+102       H3A,daMSita,89261
+103       H3A,daMSita,89262
+104       H3A,daMSita,89263
+105       H3A,daMSita,89264
+106       H3A,daMSita,89265
+107       H3B,daMSita,89266
+108       H3,daMSin,89267
+109       H3B,daMSin,89268
+110       H3B,daMSin,89269
+111       H2,daMSuka,89270
+112       H2,daMSera,89271
+113       H3,daMSman,89272
+114       H3A,daMSman,89273
+115       H2,daMzwf,89274
+116       H2,daMzwra,89275
+117       H2B,daMzwrA,89276
+118       H2B,daMzwra,89277
+119       H2,daMzwrA,89278
+120       H3,daMzwrAkarAla,89279
+121       H4,daMzwrAkarAlavat,89280
+
+** The example of 'dAka' 
+This is L-number 91216, which is line number 100020 in monier.xml as of the
+date of this note.
+There follows an annotated list of the 121 records centered here, with 
+labels 1 to 25 for the records appearing in the webtc5wb display list 
+(hierarchical display).
+001       H3,dasyuhan,91160
+002       H4,dasyuhantama,91161
+003       H4A,dasyuhantama,91162
+004       H1,dasra,91163
+005       H1,dah,91164
+006       H2,dah,91165
+007       H3,dahati,91166
+008       H2,dahadahA,91167
+009       H2,dahana,91168
+010       H2A,dahana,91169
+011       H2B,dahana,91170
+012       H2B,dahana,91171
+013       H2B,dahana,91172
+014       H2B,dahana,91173
+015       H2B,dahana,91174
+016       H2B,dahana,91175
+017       H2B,dahana,91176
+018       H2B,dahana,91177
+019       H2B,dahana,91178
+020       H2B,dahana,91179
+021       H2B,dahana,91180
+022       H2B,dahanA,91181
+023       H2B,dahanI,91182
+024       H3,dahanakarman,91183
+025       H3,dahanaketana,91184
+026       H3,dahanagarBa,91185
+027       H3,dahanatA,91186
+028       H3,dahanapriyA,91187
+029       H3,dahanarkza,91188
+030       H3,dahanavat,91188.1
+031       H3,dahanasAraTi,91188.2
+032       H3,dahanahalpa,91188.3
+033       H3,dahanAguru,91189
+034       H3,dahanArAti,91190
+035       H3,dahanopakaraRa,91191
+036       H3,dahanopala,91192
+037       H3,dahanolkA,91193
+038       H2,dahanIya,91194
+039       H3,dahanIyatA,91195
+040   1   H3,dahanIyatva,91196
+041       H1,dahara,91197
+042       H1A,dahara,91198
+043       H1B,dahara,91199
+044       H1B,dahara,91200
+045       H1B,dahara,91201
+046   2   H1B,dahara,91202
+047   3   H3,daharapfzWa,91203
+048   4   H3,daharasUtra,91204
+049   5   H2,daharaka,91205
+050   6   H2,dahra,91206
+051   7   H2C,dahram,91207
+052   8   H2B,dahra,91208
+053   9   H3,dahrAgni,91209
+054  10   H1,dahyu,91209.1
+055  11   H1,dahra,91210
+056       H1A,dahra,91211
+057       H1,dA,91212
+058       H2,dA,91213
+059       H2B,dA,91214
+060  12   H2B,dA,91215
+061  13   H2,dAka,91216
+062       H2A,dAka,91217
+063  14   H2,dAta,91218
+064  15   H3,dAtavya,91219
+065       H3A,dAtavya,91220
+066       H3A,dAtavya,91221
+067       H3A,dAtavya,91222
+068       H3A,dAtavya,91223
+069       H3A,dAtavya,91224
+070  16   H3,dAti,91225
+071  17   H4,dAtivAra,91225.1
+072  18   H2,dAtf,91226
+073       H3,dAtf,91227
+074       H3A,dAtf,91227.1
+075       H3A,dAtf,91227.2
+076       H3A,dAtf,91227.3
+077       H3A,dAtf,91227.4
+078       H3A,dAtf,91227.5
+079       H3A,dAtf,91227.6
+080       H3A,dAtf,91227.7
+081  19   H3,dAtftA,91228
+082  20   H3,dAtftva,91229
+083  21   H3,dAtfnirUpaRa,91230
+084  22   H3,dAtfpura,91231
+085  23   H3,dAtfpratIcCaka,91231.1
+086  24   H2,dAtta,91232
+087  25   H3,dAttAmitrI,91233
+088       H4,dAttAmitrIya,91234
+089       H2,dAtteya,91235
+090       H2,dAtva,91236
+091       H2B,dAtva,91237
+092       H2,dAda,91238
+093       H3,dAdada,91239
+094       H2,dAdin,91240
+095       H2,dAna,91241
+096       H2A,dAna,91242
+097       H2A,dAna,91243
+098       H2A,dAna,91244
+099       H2A,dAna,91245
+100       H2A,dAna,91246
+101       H2A,dAna,91247
+102       H2A,dAna,91248
+103       H2A,dAna,91249
+104       H2A,dAna,91250
+105       H3,dAnakamalAkara,91251
+106       H3,dAnakalpataru,91252
+107       H3,dAnakAma,91253
+108       H3,dAnakusumAYjali,91254
+109       H3,dAnakelikOmudI,91255
+110       H3,dAnakOmudI,91256
+111       H3,dAnakOstuBa,91257
+112       H3,dAnakriyAkOmudI,91258
+113       H3,dAnaKaRqa,91259
+114       H3,dAnacandrikA,91260
+115       H3,dAnacyuta,91261
+116       H3,dAnatas,91262
+117       H3,dAnadarpaRa,91263
+118       H3,dAnadinakara,91264
+119       H3,dAnaDarma,91265
+120       H4,dAnaDarmakaTana,91265.05
+121       H4,dAnaDarmaviDi,91265.1
+
+** Note:
+ Ancillary files for the examples are in subdirectory readme_work.
+* listhierskip April 14, 2013
+ monierlisthier.php is adjusted to
+  (a) include listhierskip.php
+      This initializes a hash listhierskip_hash of Lnums which are to be 
+      skipped.
+      For initialization, see readme.org in mwupdate/lgtab1/mapnorm/ directory.
+  (b) call listhierskip(

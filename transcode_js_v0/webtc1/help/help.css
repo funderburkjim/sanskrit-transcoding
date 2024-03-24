@@ -1,0 +1,63 @@
+body {
+	color: black; background-color: #DBE4ED;
+	font-family: verdana,arial,helvetica,sansserif;
+	font-size: 12pt;
+}
+
+#dictid {
+  position:absolute;
+  top: 5px;
+  left: 200px;
+  right: 5px;
+  height: 95px;
+  font-size: larger;
+}
+#dictnav {
+  position:absolute;
+  left: 5px;top:100px; width:190px;
+  background-color:#BBCCEE;
+}
+
+#disp {
+  position:absolute;
+ top:100px; left: 200px;right: 5px; bottom: 5px;
+ /* height: 500px;*/
+ background-color: white;
+ overflow: auto;
+}
+
+ul.nav
+{
+list-style-type:none;
+margin:0;
+padding:0;
+padding-top:6px;
+padding-bottom:6px;
+}
+li.nav
+{
+display:inline;
+margin:0;
+}
+
+
+a.nav 
+{
+ display:block;
+/* width: 100px; */
+/* background-color:#dddddd; */
+cursor: pointer;
+}
+a.nav:hover {
+ background-color: white;
+}
+.navref {
+text-decoration:none;
+/*text-transform:uppercase; */
+ background-color:#BBCCEE; /*#dddddd;*/
+}
+
+p {
+	padding-left: 5pt;
+	padding-right: 5pt;
+}

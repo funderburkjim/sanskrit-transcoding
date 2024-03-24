@@ -1,0 +1,90 @@
+<fsm start='INIT'>
+<!-- base = \u0b80 -->
+<e> <s>INIT</s> <in>a</in> <out>\u0b85</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>A</in> <out>\u0b86</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>i</in> <out>\u0b87</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>I</in> <out>\u0b88</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>u</in> <out>\u0b89</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>U</in> <out>\u0b8a</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>e</in> <out>\u0b8e</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>E</in> <out>\u0b8f</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>ai</in> <out>\u0b90</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>o</in> <out>\u0b92</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>O</in> <out>\u0b93</out> <next>TAMIL</next></e>
+<e> <s>INIT</s> <in>au</in> <out>\u0b94</out> <next>TAMIL</next></e>
+
+<e> <s>TAMIL</s> <in>a</in> <out></out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>A</in> <out>\u0bbe</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>i</in> <out>\u0bbf</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>I</in> <out>\u0bc0</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>u</in> <out>\u0bc1</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>U</in> <out>\u0bc2</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>e</in> <out>\u0bc6</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>E</in> <out>\u0bc7</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>ai</in> <out>\u0bc8</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>o</in> <out>\u0bca</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>O</in> <out>\u0bcb</out> <next>INIT</next></e>
+<e> <s>TAMIL</s> <in>au</in> <out>\u0bcc</out> <next>INIT</next></e>
+
+<!-- consonants followed by a non-vowel:insert halant 
+  Note: these must precede the other batch of consonants!
+-->
+<e> <s>INIT,TAMIL</s> <in>k/^([^aAiIuUeEoO])</in> <out>\u0b95\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>g/^([^aAiIuUeEoO])</in> <out>\u0b99\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>c/^([^aAiIuUeEoO])</in> <out>\u0b9a\u0bcd</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>J/^([^aAiIuUeEoO])</in> <out>\u0b9e\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>T/^([^aAiIuUeEoO])</in> <out>\u0b9f\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>N/^([^aAiIuUeEoO])</in> <out>\u0ba3\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>t/^([^aAiIuUeEoO])</in> <out>\u0ba4\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>n_/^([^aAiIuUeEoO])</in> <out>\u0ba9\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>n/^([^aAiIuUeEoO])</in> <out>\u0ba8\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>p/^([^aAiIuUeEoO])</in> <out>\u0baa\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>m/^([^aAiIuUeEoO])</in> <out>\u0bae\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>y/^([^aAiIuUeEoO])</in> <out>\u0baf\u0bcd</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>r/^([^aAiIuUeEoO])</in> <out>\u0bb0\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>l/^([^aAiIuUeEoO])</in> <out>\u0bb2\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>v/^([^aAiIuUeEoO])</in> <out>\u0bb5\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>z/^([^aAiIuUeEoO])</in> <out>\u0bb4\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>L/^([^aAiIuUeEoO])</in> <out>\u0bb3\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>R/^([^aAiIuUeEoO])</in> <out>\u0bb1\u0bcd</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>j/^([^aAiIuUeEoO])</in> <out>\u0b9c\u0bcd</out><next>TAMIL</next></e> 
+<!--
+<e> <s>INIT,TAMIL</s> <in>C/^([^aAiIuUeEoO])</in> <out>\u0bb8\u0bcd\u005e</out><next>TAMIL</next></e>
+-->
+<e> <s>INIT,TAMIL</s> <in>S/^([^aAiIuUeEoO])</in> <out>\u0bb7\u0bcd</out><next>TAMIL</next></e> 
+<e> <s>INIT,TAMIL</s> <in>s/^([^aAiIuUeEoO])</in> <out>\u0bb8\u0bcd</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>h/^([^aAiIuUeEoO])</in> <out>\u0bb9\u0bcd</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>k</in> <out>\u0b95</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>g</in> <out>\u0b99</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>c</in> <out>\u0b9a</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>J</in> <out>\u0b9e</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>T</in> <out>\u0b9f</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>N</in> <out>\u0ba3</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>t</in> <out>\u0ba4</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>n</in> <out>\u0ba8</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>p</in> <out>\u0baa</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>m</in> <out>\u0bae</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>y</in> <out>\u0baf</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>r</in> <out>\u0bb0</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>l</in> <out>\u0bb2</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>v</in> <out>\u0bb5</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>z</in> <out>\u0bb4</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>L</in> <out>\u0bb3</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>R</in> <out>\u0bb1</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>n_</in> <out>\u0ba9</out><next>TAMIL</next></e>
+
+<e> <s>INIT,TAMIL</s> <in>j</in> <out>\u0b9c</out><next>TAMIL</next></e> 
+<e> <s>INIT,TAMIL</s> <in>C</in> <out>\u0bb8\u0bcd\u005e</out><next>INIT</next></e>
+<e> <s>INIT,TAMIL</s> <in>S</in> <out>\u0bb7</out><next>TAMIL</next></e> 
+<e> <s>INIT,TAMIL</s> <in>s</in> <out>\u0bb8</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>h</in> <out>\u0bb9</out><next>TAMIL</next></e>
+<e> <s>INIT,TAMIL</s> <in>Q</in> <out>\u0b83</out><next>TAMIL</next></e>
+
+
+</fsm>

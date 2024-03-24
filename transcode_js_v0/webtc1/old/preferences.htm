@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "//www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="//www.w3.org/1999/xhtml">
+<head>
+ <title>Input/Display Preferences</title>
+ <style type='text/css'>
+  body {background-color: #4488CC;}
+   table#keyboardOptions td.col1 {vertical-align: top; width: 100px; font-weight:bold}
+   table#keyboardOptions td.col2 {vertical-align: top; width: 100px}
+   table#keyboardOptions td.col3 {}
+   table#keyboardOptions td.buttonSpacer {width:125px}
+
+   #divTabBar
+   {
+    margin-bottom: 10px;
+   }
+      
+   #displayTab
+   {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: yellow;
+    cursor: pointer;
+   }
+
+   #sourceTab
+   {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+   }
+
+   #accentTab
+   {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+   }
+
+   .divSourceOption
+   {
+    position: relative;
+    background-color: yellow;
+    float:left;
+    width:40px;
+    height:30px;
+    border: 1px solid black;
+    text-align: center;
+    cursor: pointer;
+   }
+   
+   #divInputDisplay
+   {
+    display:block;
+   }
+
+   #divSourceType
+   {
+    display: none;
+    height:300px;
+    width: 600px;
+    background-color: white;
+   }   
+
+   #divAccentType
+   {
+    display: none;
+    height:300px;
+    width: 600px;
+    background-color: white;
+   }   
+
+   #divSources
+   {
+    width: auto;
+   }
+      
+   #divActual
+   {
+    width: auto;
+   }
+   
+   #btnClear
+   {
+    clear: both;
+   }
+ </style>
+<!--ejf<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>-->
+ <script type="text/javascript" src="../js/jquery.min.js"></script>
+ <script type='text/javascript'>
+var backupStateTable = {};  // so that state can be restored if user hits cancel.
+var kt = null;
+   $(function(){
+var sources = [
+ {value: "R", text:"Ramopakhyana"},
+ {value:"MW", text:"Monier Williams"},
+ {value:"B", text:"Bohtlingk"},
+ {value:"Huet", text:"Gerard Huet's dictionary"},
+ {value:"PW", text:"The great St. Petersburg lexicon of Bohtlingk and Roth"},
+ {value:"pw", text:"The small St. Petersburg lexicon of Bohtlingk and Roth"},
+ {value:"L", text:"Indigenous Indian lexical sources"},
+ {value:"V", text:"Vacaspatyam"},
+ {value:"SKD", text:"Sabdakalpadruma"},
+ {value:"A", text:"Apte"},
+ {value:"W", text:"Wilson"},
+ {value:"M", text:"Macdonell"},
+ {value:"T", text:"Turner"}
+];
+ // tabs
+ var $displayTab = $("#displayTab");
+ var $sourceTab = $("#sourceTab");
+ var $accentTab = $("#accentTab");
+ 
+ // div panels
+ var $inputDisplay = $("#divInputDisplay");
+ var $sourceType = $("#divSourceType");
+ var $accentType = $("#divAccentType");
+ 
+ // sub divs of divSourceType
+ var $options = $("#divSources");
+ var $actual = $("#divActual");
+
+ // set click event handler for "Input/Display" tab
+ $displayTab.click(function()
+  {
+   $sourceType.css({display:"none"}); 
+   $inputDisplay.css({display:"block"});
+   $accentType.css({display:"none"}); 
+
+   $displayTab.css({"background-color": "yellow"});
+   $sourceTab.css({"background-color": "white"});
+   $accentTab.css({"background-color": "white"});
+  });
+  
+ // set click event handler for "Sources" tab 
+ $sourceTab.click(function()
+  {
+   $sourceType.css({display:"block"}); 
+   $inputDisplay.css({display:"none"});
+   $accentType.css({display:"none"}); 
+   $displayTab.css({"background-color": "white"});
+   $sourceTab.css({"background-color": "yellow"});
+   $accentTab.css({"background-color": "white"});
+  });
+
+
+ // set click event handler for "Accents" tab 
+ $accentTab.click(function()
+  {
+   $inputDisplay.css({display:"none"});
+   $sourceType.css({display:"none"});
+   $accentType.css({display:"block"}); 
+   $displayTab.css({"background-color": "white"});
+   $sourceTab.css({"background-color": "white"});
+   $accentTab.css({"background-color": "yellow"});
+  });
+
+ // Initialize divSourceType using sources array
+ var tabNames = opener.VKI_state["tabNames"].split("!");
+ for (var i=0; i<sources.length; i++)
+ {
+  var value = sources[i].value;
+  var text = sources[i].text;    
+  var $divOption = $("<div class='divSourceOption' id='divIcon" + i + "' title='" + text + "'>" + value + "</div>");
+  $divOption.click(function(){
+   var $currentTab = $(this);
+   var text = $currentTab.text();
+   
+   // add new tab while reconstructing tabNames cookie
+   var tabNames = "";
+   var $kids = $actual.children();
+   var delim = "";
+   for (var j=0; j<$kids.length; j++)
+   {
+    $kid = $($kids[j]);
+    var s = $kid.text();
+    if (!s || s.length == 0)
+    {
+     $kid.text(text);
+     tabNames += delim + text;
+     break;
+    }
+    else
+    {
+     tabNames += delim + s;
+     delim = "!";
+    }
+   }
+   opener.createCookie("tabNames", tabNames, 365);     
+  });  
+  $options.append($divOption);
+  
+  // initialize from cookie and add click handler to actual tab slot
+  var actvalue = "";
+  if (i < tabNames.length)
+   actvalue = tabNames[i];
+   
+  var $divActual = $("<div class='divSourceOption' id='divTab" + i + "'>" + actvalue + "</div>");
+  $actual.append($divActual);
+ }
+
+ // Set handler for clear button
+ $("#btnClear").click(function(e)
+  {
+   $tabs = $actual.children();
+   for (var i=0; i<$tabs.length; i++)
+   {
+    $($tabs[i]).text("");
+   }
+   opener.createCookie("tabNames", "", 365);  // reset the cookie
+   e.preventDefault();
+  }); 
+
+  // initialize actual tab names from the "tabNames" cookie.
+  val = opener.VKI_state["tabNames"];
+  if (val)
+  {
+   tabNames = val.split("!");
+
+   $tabs = $actual.children();
+   
+   for (var i=0; i<tabNames.length; i++)
+   { 
+    $($tabs[i]).text(tabNames[i]);
+   }
+  }
+
+  $("#divAccentChoices input").click(function()
+   {
+    opener.createCookie("sAccent", this.value, 365);
+   });
+ 
+  initInputDisplay(true); // initialize the tab that sets input/display options ejf
+});
+      
+function toggleSelections(id1, id2, val)
+{
+ $(id1)[0].disabled = false;
+ $(id2)[0].disabled = true;
+ $('#sViewAs')[0].disabled = !val;
+ $('#sServerOptions')[0].disabled = !val;
+ updateCookies();
+ initInputDisplay(false); // ejf
+}
+
+// radio button functions from //www.somacon.com/p143.php   
+function getCheckedValue(radioObj) 
+{
+ if(!radioObj)
+  return "";
+ var radioLength = radioObj.length;
+ if(radioLength == undefined)
+ {
+  if(radioObj.checked)
+   return radioObj.value;
+  else
+   return "";
+ }
+    
+ for(var i = 0; i < radioLength; i++) 
+ {
+  if(radioObj[i].checked) 
+  {
+   return radioObj[i].value;
+  }
+ }
+ 
+ return "";
+}
+   
+   
+function setCheckedValue(radioObj, newValue) 
+{
+ if(!radioObj)
+  return;
+ var radioLength = radioObj.length;
+ if(radioLength == undefined) 
+ {
+  radioObj.checked = (radioObj.value == newValue.toString());
+  return;
+ }
+ 
+ for(var i = 0; i < radioLength; i++) 
+ {
+  radioObj[i].checked = false;
+  if(radioObj[i].value == newValue.toString()) 
+  {
+   radioObj[i].checked = true;
+  }
+ }
+}
+   
+// based on getCheckedValue above
+function getSelectedValue(selObj) 
+{
+ if(!selObj)
+  return "";
+ var selLength = selObj.length;
+ if(selLength == undefined)
+ {
+  if(selObj.checked)
+   return selObj.value;
+  else
+   return "";
+ }
+    
+ for(var i = 0; i < selLength; i++) 
+ {
+  if(selObj[i].selected) 
+  {
+   return selObj[i].value;
+  }
+ }
+ 
+ return "";
+}
+
+
+function setSelectedValue(selObj, newValue) 
+{
+ if(!selObj)
+  return;
+ var selLength = selObj.length;
+ if(selLength == undefined) 
+ {
+  selObj.selected = (selObj.value == newValue.toString());
+  return;
+ }
+ for(var i = 0; i < selLength; i++) 
+ {
+  selObj[i].selected = false;
+  if(selObj[i].value == newValue.toString()) 
+  {
+   selObj[i].selected = true;
+  }
+ }
+  
+}
+
+function updateCookies()
+{
+ var kbtype = null;
+ var val = getCheckedValue(document.forms['formPreferences'].elements['inputType']);     
+ kbtype = val;
+ opener.createCookie("inputType", val, 365);    
+ val = getSelectedValue($('#sPhoneticInput')[0]);
+ opener.createCookie("phoneticInput", val, 365);
+ if (val != opener.currentKeyMap)
+  opener.setKeyMapping(val);
+ if (kbtype=="phonetic")
+ { 
+  if (val != opener.VKI_kt)
+   opener.VKI_buildKeyboardInputs(val);
+ }
+    
+ val = getSelectedValue($('#sUnicodeInput')[0]);
+ opener.createCookie("unicodeInput", val, 365);
+
+ if (kbtype=="unicode")
+ {
+  if (val != opener.VKI_kt)
+   opener.VKI_buildKeyboardInputs(val);     
+  switch (val)
+  {
+   case "trnRoman": val = "roman"; break;
+   case "devInscript": val = "deva"; break;
+   case "devQWERTY": val = "deva"; break;
+   case "telInscript": val = "telugu"; break;
+  }
+  setSelectedValue($("sViewAs"), val);
+  setSelectedValue($("sServerOptions"), val);
+  opener.createCookie("viewAs", val, 365);
+  opener.createCookie("serverOptions", val, 365);    
+ }
+ else
+ {    
+  val = getSelectedValue($('#sViewAs')[0]);
+  if (kbtype == "phonetic")
+   opener.VKI_viewAs = val;
+  else
+   opener.VKI_viewAs = null;     
+  opener.createCookie("viewAs", val, 365);
+    
+  opener.VKI_passThrough = val == "phonetic";    
+
+  val = getSelectedValue($('#sServerOptions')[0]);
+  opener.createCookie("serverOptions", val, 365);    
+ }
+ val = getSelectedValue($('#sListOptions')[0]);
+ opener.createCookie("listOptions", val, 365);    
+ 
+ val = getSelectedValue($('#sAccess')[0]);
+ opener.createCookie("sAccess", val, 365);
+}
+   
+function backupState()
+{
+ for (var key in opener.VKI_state)
+ {
+  backupStateTable[key] = opener.VKI_state[key];
+ }
+}
+   
+   
+function restoreState()
+{
+ for (var key in backupStateTable)
+ {
+  opener.VKI_state[key] = backupStateTable[key];
+ }
+    
+ opener.setCookies(backupStateTable);
+}
+//ejf function initInputDisplay() 
+ function initInputDisplay(backupFlag) 
+ {
+  var type = null;
+  if(backupFlag) {backupState();} //ejf
+  var val = opener.VKI_state["inputType"];
+  if (val)
+  {
+   type = val;
+   setCheckedValue(document.forms['formPreferences'].elements['inputType'], val);
+   if (val == "phonetic")
+   {
+    $("#sUnicodeInput")[0].disabled = true;
+    $("#sPhoneticInput")[0].disabled = false;      
+    $("#sViewAs")[0].disabled = false;
+    $("#sServerOptions")[0].disabled = false;      
+    $("#sServerOptions")[0].disabled = true; // ejf Dec 3, 2010 For Cologne    
+   }
+   else if (val == "unicode")
+   {
+    $("#sUnicodeInput")[0].disabled = false;
+    $("#sPhoneticInput")[0].disabled = true;      
+    $("#sViewAs")[0].disabled = true;
+    $("#sServerOptions")[0].disabled = true;      
+   }          
+  }     
+
+  val = opener.VKI_state["phoneticInput"];
+  if (val)
+  {
+   setSelectedValue($('#sPhoneticInput')[0], val);     
+   opener.setKeyMapping(val);
+  }
+  if (type == "phonetic")
+    kt = val;
+
+  val = opener.VKI_state["unicodeInput"];
+  if (val)    
+   setSelectedValue($('#sUnicodeInput')[0], val);     
+  if (type == "unicode")
+    kt = val;
+
+  val = opener.VKI_state["viewAs"];
+  opener.VKI_viewAs = null;
+  if (val)
+  {
+   setSelectedValue($('#sViewAs')[0], val);     
+   if (type == "phonetic")
+    opener.VKI_viewAs = val;
+  }
+
+  val = opener.VKI_state["serverOptions"];
+  if (val)
+   setSelectedValue($('#sServerOptions')[0], val);     
+
+  val = opener.VKI_state["sAccent"];
+  setCheckedValue(document.forms['formPreferences'].elements['sAccent'], val);
+
+  opener.VKI_buildKeyboardInputs(kt);
+    
+  val = opener.VKI_state["listOptions"];
+  // alert ("dbg: listOptions = '" + val + "'");
+  if (val) {setSelectedValue($('#sListOptions')[0], val); }
+ }
+   
+ function cancel()
+ {
+  restoreState();
+  opener.VKI_buildKeyboardInputs(kt);
+  window.close();
+ }   
+ </script>
+</head>
+
+<body>
+<form id='formPreferences' name='formPreferences'>
+ <div id='divTabBar'>
+<!-- ejf
+  <span id='displayTab'>Input/Display</span><span id='sourceTab'>Sources</span><span id='accentTab'>Accents</span>
+-->
+  <span id='displayTab'>Input/Display</span><span id='sourceTab' style='visibility:hidden;'>Sources</span><span id='accentTab' style='visibility:hidden;'>Accents</span>
+ </div>
+ <div id='divInputDisplay' style='width:500px; border:3px solid red;'>
+  <table id='keyboardOptions' style="width:800px">
+   <tr>
+    <td class="col1" style="vertical-align:middle">
+     Keyboard&nbsp;input:
+    </td>
+    <td class="col2">
+     <input value='phonetic' type='radio' name='inputType' onclick="toggleSelections('#sPhoneticInput', '#sUnicodeInput', true)" checked='checked'/> 
+     <label for='rInputSensitive'>Phonetic</label><br />
+     <input value='unicode' type='radio' name='inputType' onclick="toggleSelections('#sUnicodeInput', '#sPhoneticInput', false)"/>
+     <label for='rInputUnicode'>Unicode</label>
+    </td>
+    <td class="col3" colspan="2">
+     <select id='sPhoneticInput' name='sPhoneticInput' style="width: 250px" onchange='updateCookies()'>
+       <!-- ejf reordered for Cologne -->
+      <option id='optHKInput' value='hk'>Kyoto-Harvard (KH)</option>
+      <option id='optSLP1Input' value='slp1' selected='selected'>Sanskrit Library Phonetic (SLP1)</option>
+      <option id='optITransInput' value='it'>Indian Language Transliteration (ITrans)</option>
+      <option id='optWXInput' value='wx'>Hyderabad-Tirupati (WX)</option>
+      <!-- ejf <option id='optVelthuisInput' value='vt' disabled='disabled'>Velthuis (VT)</option> -->
+      <!-- ejf <option id='optVedatype' value='vedatype'>Vedatype</option> -->
+     </select><br />
+     <!--ejf <select id='sUnicodeInput' name='sUnicodeInput' disabled='disabled' style="width: 250px" onchange='updateCookies()'>-->
+     <select id='sUnicodeInput' name='sUnicodeInput' disabled='disabled' style="width: 250px" onchange='updateCookies();initInputDisplay(false);'>
+      <option id='optRoman' value='trnRoman' selected='selected'>Roman</option>
+      <option id='optDevanagariINSCRIPT' value='devInscript'>Devanagari INSCRIPT</option>
+      <option id='optDevanagariPhonetic' value='devQWERTY'>Devanagari QWERTY</option>
+      <!-- ejf <option id='optTeluguINSCRIPT' value='telInscript'>Telugu INSCRIPT</option> -->
+     </select><br/>  
+    </td>
+   </tr>
+   <tr id='trViewAs'>
+    <td class="col1">
+     Input&nbsp;display:
+    </td>
+    <td class="col2">&nbsp;</td>
+    <td class="col3" colspan="2">
+     <select id='sViewAs' style="width: 250px" onchange='updateCookies()'>
+      <option id='optViewPhonetic' value='phonetic'>Same as keyboard input</option>
+      <option id='optViewRomanization' value='roman'>Standard Romanization</option>
+      <option id='optViewDevanagari' value='deva'>Devanagari</option>
+      <!-- ejf <option id='optViewTelugu' value='telugu'>Telugu</option> -->
+     </select>  
+    </td>   
+   </tr>
+<!-- ejf: the old row is made invisible; the 'sServerOptions' element is required in keyboard.js
+   <tr id='trServerDisplay' style='visibility:hidden;height:1px;position:absolute;right:-1px;'>
+-->
+   <tr id='trServerDisplay' > <!-- ejf will make selection always disabled on Cologne Dec 3, 2010-->
+    <td class="col1">
+     <span style='color: #555555'>Server&nbsp;display: </span>
+    </td>
+    <td class="col2">&nbsp;</td>
+    <td class="col3" colspan="2">
+     <select id='sServerOptions' name='sServerOptions' style="width: 250px" onchange='updateCookies()'>
+      <option id='optServerInput' value='phonetic' selected='selected'>Same as keyboard input</option>
+      <option id='optServerRoman' value='roman'>Standard Romanization</option>
+      <option id='optServerDevanagari' value='deva'>Devanagari</option>
+      <!-- ejf omit on Cologne <option id='optServerTelugu' value='telugu'>Telugu</option>   -->
+     </select>
+    </td>
+   </tr>
+      <tr id='trListOption'> <!-- ejf: for Cologne, Monier Williams Display -->
+    <td class="col1">
+     <span>List&nbsp;option: </span>
+    </td>
+    <td class="col2">&nbsp;</td>
+    <td class="col3" colspan="2">
+     <select id='sListOptions' name='sListOptions' style="width: 250px" onchange='updateCookies()'>
+      <option id='optListHierarchical' value='hierarchical' selected='selected'>hierarchical</option>
+      <option id='optServerAlphabetical' value='alphabetical'>alphabetical</option>
+     </select>
+    
+   </tr>
+   <tr>
+    <td class="col1">&nbsp;</td>
+    <td class="col2">&nbsp;</td>
+    <td class="buttonSpacer">&nbsp;</td>
+    <td>&nbsp;
+     <input type='button' value='O.K.' onclick='window.close()' />
+     <input type='button' value='Cancel' onclick='cancel();' />
+    </td>
+   </tr>
+  </table>
+ </div>
+
+ <div id='divSourceType' style='border:3px solid yellow'>
+  <p style='width:400px'>You can build your own source tab bar. Click on a tab in upper row
+and that tab will appear in the next available spot in the lower row. Click the clear button to clear the lower row to start again</p>
+  <p style='margin-bottom:0px'><b>All possible sources</b></p>
+  <div id='divSources'></div>
+  <p>&nbsp;</p>
+  <p style='margin-top:30px; margin-bottom:0px'><b>Actual sources</b></p>
+  <div id='divActual'></div>
+  <p>&nbsp;</p>
+  <button id='btnClear'>Clear</button>
+ </div> 
+ 
+ <div id='divAccentType' style='border:3px solid yellow'>
+  <div id='divAccentChoices' style="margin-left:15px;margin-top:15px;font-size:20px">
+   <input type='radio' name='sAccent' value='stdd' checked='checked'/>Standard devanagari<br/>
+   <input type='radio' name='sAccent' value='saka'/>&#x015b;&#x0101;kalasa&#x1e43;hit&#x0101; of the &#x1e5b;gveda<br/>
+   <input type='radio' name='sAccent' value='vaja'/>v&#x0101;jasaneyisa&#x1e43;hit&#x0101; of the &#x015b;uklayajurveda<br/>
+   <input type='radio' name='sAccent' value='mait'/>maitr&#x0101;ya&#x1e47;&#x012b;sa&#x1e43;hit&#x0101; of the k&#x1e5b;&#x1e63;&#x1e47;ayajurveda and the Kashmiri mss. of #2<br/>
+   <input type='radio' name='sAccent' value='kath'/>k&#x0101;&#x1e6d;hakasa&#x1e43;hit&#x0101; of the k&#x1e5b;&#x1e63;&#x1e47;ayajurveda<br/>
+   <input type='radio' name='sAccent' value='paip'/>paippal&#x0101;dasa&#x1e43;hit&#x0101; of the atharveda<br/>
+   <input type='radio' name='sAccent' value='sama'/>s&#x0101;maveda sa&#x1e43;hita in the kauthuma &#x015b;akh&#x0101;<br/>
+   <input type='radio' name='sAccent' value='tait'/>taittir&#x012b;yasa&#x1e43;hit&#x0101; of the k&#x1e5b;&#x1e63;&#x1e47;ayajurveda<br/>
+   <input type='radio' name='sAccent' value='atap'/>&#x015b;atapathabr&#x0101;hama&#x1e47;a<br/>
+  </div>
+ </div>
+</form>  
+</body>
+</html>

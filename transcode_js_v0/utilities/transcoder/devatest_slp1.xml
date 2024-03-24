@@ -1,0 +1,4 @@
+<fsm start='INIT' inputDecoding='UTF-8' outputEncoding='UTF-8'>
+  <e> <s>INIT</s> <in>\u0905</in> <out>a</out></e>
+
+</fsm>

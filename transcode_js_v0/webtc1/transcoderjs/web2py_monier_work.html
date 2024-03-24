@@ -1,0 +1,53 @@
+{{extend 'mwlayout.html'}}
+
+<script type="text/javascript">
+ <!-- jquery event handlers -->
+    $(document).ready(function() {
+      $('button.alert').click(function() {
+        alert('this is an alert message');
+      });
+      $('#key').keydown(function(event) {
+        if (event.keyCode == '13') {
+         event.preventDefault();
+         ajax('mwdisp', ['key','input','output'], 'target');
+        }
+       });
+      $('#transLit').change(function(event) {
+          cookieUpdate(true);   
+      });
+      $('#filter').change(function(event) {
+          cookieUpdate(true);   
+      });
+      cookieUpdate(false);  // for initializing cookie
+    });
+</script>
+<div id="top">
+ <img id="unilogo" src="{{=URL('static','images/cologne_univ_seal.gif')}}"
+           alt="University of Cologne" width="60" height="60" 
+           />
+  <span style="font-size:larger; position:absolute; top=5px; margin-left:5px">
+      Monier Williams <br/>Sanskrit-English Dictionary
+  </span>       
+  <a id="mwquery" href="{{=URL('default','mwquery.html')}}" >Advanced Search</a>
+
+</div>
+<div id="user" >           
+   citation: <input name="key" id="key" />&nbsp;
+   <button class="search" onclick="ajax('mwdisp', ['key','input','output'], 'target');">Search</button>
+   <select name="transLit" id="transLit">
+    <option value='hk'>Kyoto-Harvard</option>
+    <option value='slp1'>SLP1</option>
+    <option value='itrans'>ITRANS</option>
+   </select>
+   <select name="filter" id="filter">
+    <option value='deva'>Devanagari Unicode</option>
+    <option value='hk'>Kyoto-Harvard</option>
+    <option value='slp1'>SLP1</option>
+    <option value='itrans'>ITRANS</option>
+    <option value='roman'>Roman Unicode</option>
+   </select>
+   <input name="input" id="input_input" value="hk" style="visibility:hidden" /> 
+   <input name="output" id="input_output" value="deva" style="visibility:hidden" />
+</div>
+
+<div id="target" name="target"></div>

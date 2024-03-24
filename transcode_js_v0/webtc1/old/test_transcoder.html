@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "//www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- monier/webtc5/index.php Sep 26, 2012 ejf on sanskrit1d server
+-->
+ <head>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+  <title>xml parsing with Jquery</title>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <link rel="stylesheet" type="text/css" href="keyboard.css"/>
+  <style type="text/css">
+.keyboardInput {
+ font-size: 16px;
+ overflow:hidden;
+ line-height:140%;
+}
+ </style>
+
+  <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+   <script type="text/javascript">
+	$(function(){
+  	// Document is ready
+        loadFcn(); // below, in this test
+	});    				
+ </script>
+ <script type="text/javascript">
+function loadFcn() {
+}
+ </script>
+<script type="text/javascript">
+// Transcoder
+ 
+</script>
+
+ </head>
+ <body>
+<p id="someElement"></p>
+<p id="anotherElement"></p>
+
+  
+
+<script>
+var xml = "<rss version='2.0'><channel><title>RSS Title</title></channel></rss>",
+    xmlDoc = $.parseXML( xml ),
+    $xml = $( xmlDoc ),
+    $title = $xml.find( "title" );
+
+/* append "RSS Title" to #someElement */
+$( "#someElement" ).append( $title.text() );
+
+/* change the title to "XML Title" */
+$title.text( "XML Title" );
+
+/* append "XML Title" to #anotherElement */
+$( "#anotherElement" ).append( $title.text() );
+</script>
+
+<script>
+var xml = $.parseXML("<foo>Stuff</foo>");
+alert(xml.documentElement.nodeName);
+</script>
+</body>
+</html>
