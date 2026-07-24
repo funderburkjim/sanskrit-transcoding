@@ -1,3 +1,6 @@
+07-25-2026  transcode_js_v0  test1.html provides working example
+            for Javascript transcoding between slp1 and Devanagari.
+	    
 02-03-2024
 Files downloaded from scans/MWScan/2013/web directory at Cologne server.
 2013_utilities.zip  a zip of 2013/web/utilities
